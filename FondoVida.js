@@ -8,10 +8,45 @@ let Filas;
 let Mundo;
 let SiquienteMundo;
 
+
+// mqtt://fondoalsw:lLkCndA14Rec4bMg@fondoalsw.cloud.shiftr.io
+const client = mqtt.connect('xxx', {
+  clientId: 'javascript'
+});
+client.on('connect', function() {
+  console.log('connected!');
+
+  client.subscribe('#');
+
+  setInterval(function() {
+    client.publish('fondo/reiniciar', '1');
+  }, 3000);
+});
+
+client.on('message', function(topic, message) {
+  console.log(topic + ': ' + message.toString());
+  if (topic == "fondo/reiniciar") {
+    console.log("Reiniciando ")
+    Inicializar();
+  }
+});
+
+
+
 function setup() {
   createCanvas(1920, 1080);
-  frameRate(60);
-  Ancho = 30;
+  frameRate(10);
+  Inicializar()
+}
+
+function draw() {
+  Dibujar();
+  Actualizar();
+}
+
+function Inicializar() {
+
+  Ancho = floor(random(10, 50));
   Columnas = floor(width / Ancho);
   Filas = floor(width / Ancho)
 
@@ -26,16 +61,7 @@ function setup() {
   }
 
   background(0);
-  Inicializar()
-}
 
-function draw() {
-  background(0);
-  Dibujar();
-  Actualizar();
-}
-
-function Inicializar() {
   for (let x = 0; x < Columnas; x++) {
     for (let y = 0; y < Filas; y++) {
       if (x == 0 || y == 0 || x == Columnas - 1 || y == Filas - 1) {
@@ -53,13 +79,9 @@ function Actualizar() {
       let Vecinos = 0;
       for (let i = -1; i <= 1; i++) {
         for (let j = -1; j <= 1; j++) {
-          // print(i + " " + x)
-          if (i == 0 && j == 0) {
-
-          } else {
+          if (!(i == 0 && j == 0)) {
             Vecinos += Mundo[x + i][y + j];
           }
-
         }
       }
       if (Mundo[x][y] == 1) {
@@ -88,7 +110,7 @@ function Dibujar() {
   for (let x = 0; x < Columnas; x++) {
     for (let y = 0; y < Filas; y++) {
       if (Mundo[x][y] == 1) {
-        fill(0, 0, 255)
+        fill(0, 255, 255)
       } else {
         fill(0, 100)
       }
