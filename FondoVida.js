@@ -7,13 +7,11 @@ let Columnas;
 let Filas;
 let Mundo;
 let SiquienteMundo;
+let Token;
+let client
 
 
-// mqtt://fondoalsw:lLkCndA14Rec4bMg@fondoalsw.cloud.shiftr.io
-const client = mqtt.connect('xxx', {
-  clientId: 'javascript'
-});
-client.on('connect', function() {
+function Conectarse() {
   console.log('connected!');
 
   client.subscribe('#');
@@ -21,22 +19,36 @@ client.on('connect', function() {
   setInterval(function() {
     client.publish('fondo/reiniciar', '1');
   }, 3000);
-});
+}
 
-client.on('message', function(topic, message) {
+
+function RecivirMensaje(topic, message) {
   console.log(topic + ': ' + message.toString());
   if (topic == "fondo/reiniciar") {
     console.log("Reiniciando ")
     Inicializar();
   }
-});
+}
 
-
+function preload() {
+  // Get the most recent earthquake in the database
+  let url = 'Token.js';
+  Token = loadJSON(url);
+}
 
 function setup() {
   createCanvas(1920, 1080);
   frameRate(10);
-  Inicializar()
+  Inicializar();
+  console.log(Token['Token_MQTT']);
+
+  client = mqtt.connect(Token["Token_MQTT"], {
+    clientId: 'javascript'
+  });
+
+  client.on('connect', Conectarse);
+  client.on('message', RecivirMensaje);
+
 }
 
 function draw() {
