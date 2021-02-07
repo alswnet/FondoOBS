@@ -9,16 +9,16 @@ let Mundo;
 let SiquienteMundo;
 let Token;
 let client
-
+let ColorCuadrados;
 
 function Conectarse() {
   console.log('connected!');
 
   client.subscribe('#');
 
-  setInterval(function() {
-    client.publish('fondo/reiniciar', '1');
-  }, 3000);
+  // setInterval(function() {
+  //   client.publish('fondo/reiniciar', '1');
+  // }, 3000);
 }
 
 
@@ -27,23 +27,24 @@ function RecivirMensaje(topic, message) {
   if (topic == "fondo/reiniciar") {
     console.log("Reiniciando ")
     Inicializar();
+  } else if (topic == "fondo/color") {
+    ColorCuadrados = AsignarColor(message.toString());
   }
 }
 
 function preload() {
-  // Get the most recent earthquake in the database
   let url = 'Token.js';
   Token = loadJSON(url);
 }
 
 function setup() {
   createCanvas(1920, 1080);
+  ColorCuadrados = color(0, 255, 255);
   frameRate(10);
   Inicializar();
-  console.log(Token['Token_MQTT']);
 
   client = mqtt.connect(Token["Token_MQTT"], {
-    clientId: 'javascript'
+    clientId: 'Fondo_OBS'
   });
 
   client.on('connect', Conectarse);
@@ -122,17 +123,38 @@ function Dibujar() {
   for (let x = 0; x < Columnas; x++) {
     for (let y = 0; y < Filas; y++) {
       if (Mundo[x][y] == 1) {
-        fill(0, 255, 255)
+        fill(ColorCuadrados)
       } else {
         fill(0, 100)
       }
       rect(x * Ancho, y * Ancho, Ancho, Ancho)
     }
   }
-
-
 }
 
 function mousePressed() {
   Inicializar()
+}
+
+function AsignarColor(TextoColor) {
+  if (TextoColor == "rojo") {
+    return color(255, 0, 0);
+  } else if (TextoColor == "azul") {
+    return color(0, 0, 255);
+  } else if (TextoColor == "verde") {
+    return color(0, 255, 0);
+  } else if (TextoColor == "blanco") {
+    return color(255);
+  } else if (TextoColor == "gris") {
+    return color(100);
+  } else if (TextoColor == "aqua") {
+    return color(0, 255, 255);
+  } else if (TextoColor == "amarillo") {
+    return color(255, 255, 0);
+  } else if (TextoColor == "naranja") {
+    return color(239, 127, 26);
+  } else if (TextoColor == "morado") {
+    return color(163, 73, 164);
+  }
+  return color(0, 255, 255);
 }
