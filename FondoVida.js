@@ -12,8 +12,7 @@ let client
 let ColorCuadrados;
 
 function Conectarse() {
-  console.log('connected!');
-
+  console.log('Conectado a MQTT!');
   client.subscribe('#');
 
   // setInterval(function() {
@@ -25,9 +24,10 @@ function Conectarse() {
 function RecivirMensaje(topic, message) {
   console.log(topic + ': ' + message.toString());
   if (topic == "fondo/reiniciar") {
-    console.log("Reiniciando ")
+    console.log("Reiniciando Animacion")
     Inicializar();
   } else if (topic == "fondo/color") {
+    console.log("Cambiar color Animacion")
     ColorCuadrados = AsignarColor(message.toString());
   }
 }
@@ -44,7 +44,7 @@ function setup() {
   Inicializar();
 
   client = mqtt.connect(Token["Token_MQTT"], {
-    clientId: 'Fondo_OBS'
+    clientId: 'Fondo_OBS_' + floor(random(10000))
   });
 
   client.on('connect', Conectarse);
@@ -133,7 +133,7 @@ function Dibujar() {
 }
 
 function mousePressed() {
-  Inicializar()
+  client.publish('fondo/reiniciar', '1');
 }
 
 function AsignarColor(TextoColor) {
