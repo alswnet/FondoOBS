@@ -13,7 +13,7 @@ let ColorCuadrados;
 
 function Conectarse() {
   console.log('Conectado a MQTT!');
-  client.subscribe('#');
+  client.subscribe('fondo/#');
 
   // setInterval(function() {
   //   client.publish('fondo/reiniciar', '1');
@@ -31,11 +31,11 @@ function RecivirMensaje(topic, message) {
     ColorCuadrados = AsignarColor(message.toString());
   }
 }
-
-function preload() {
-  let url = 'Token.js';
-  Token = loadJSON(url);
-}
+//
+// function preload() {
+//   let url = 'Token.js';
+//   Token = loadJSON(url);
+// }
 
 function setup() {
   createCanvas(1920, 1080);
@@ -43,7 +43,7 @@ function setup() {
   frameRate(10);
   Inicializar();
 
-  client = mqtt.connect(Token["Token_MQTT"], {
+  client = mqtt.connect("wss://public:public@public.cloud.shiftr.io ", {
     clientId: 'Fondo_OBS_' + floor(random(10000))
   });
 
@@ -59,7 +59,7 @@ function draw() {
 
 function Inicializar() {
 
-  Ancho = floor(random(10, 50));
+  Ancho = floor(random(5, 20));
   Columnas = floor(width / Ancho);
   Filas = floor(width / Ancho)
 
