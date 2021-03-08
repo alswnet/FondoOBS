@@ -29,6 +29,9 @@ function RecivirMensaje(topic, message) {
   } else if (topic == "fondo/color") {
     console.log("Cambiar color Animacion")
     ColorCuadrados = AsignarColor(message.toString());
+  } else if (topic == 'fondo/colorhex'){
+    console.log("El color es "+ message.toString());
+    ColorCuadrados = color(message.toString());
   }
 }
 //
