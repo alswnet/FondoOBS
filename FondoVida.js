@@ -158,6 +158,8 @@ function AsignarColor(TextoColor) {
     return color(239, 127, 26);
   } else if (TextoColor == "morado") {
     return color(163, 73, 164);
+  } else if (TextoColor == "rosado") {
+    return color(255, 0, 128);
   }
   return color(0, 255, 255);
 }
