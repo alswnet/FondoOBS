@@ -1,6 +1,10 @@
 class JuegoVida {
   constructor() {
     console.log("Iniciando Juego de la vida");
+    this.Iniciar();
+  }
+
+  Iniciar() {
     this.Ancho = floor(random(5, 20));
     this.Columnas = floor(width / this.Ancho);
     this.Filas = floor(width / this.Ancho);
@@ -56,6 +60,7 @@ class JuegoVida {
   }
 
   Dibujar() {
+    translate(-width / 2, -height / 2);
     for (let x = 0; x < this.Columnas; x++) {
       for (let y = 0; y < this.Filas; y++) {
         if (this.Mundo[x][y] == 1) {
@@ -68,7 +73,7 @@ class JuegoVida {
     }
   }
 
-  CambiarColor(Color){
+  CambiarColor(Color) {
     this.Color = Color
   }
 }
