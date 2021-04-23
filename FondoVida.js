@@ -8,16 +8,13 @@ let Filas;
 let Mundo;
 let SiquienteMundo;
 let Token;
-let client
+let client;
 let ColorCuadrados;
 let ListaColores;
 
 function preload() {
   ListaColores = loadJSON("Colores.json");
 }
-
-
-
 
 function Conectarse() {
   console.log('Conectado a MQTT!');
@@ -45,8 +42,8 @@ function RecivirMensaje(topic, message) {
 
 function setup() {
   createCanvas(1920, 1080);
-  ColorCuadrados = color(0, 255, 255);
-  frameRate(10);
+  ColorCuadrados = ObtenerColor("");
+  // frameRate(10);
   Inicializar();
 
   client = mqtt.connect("wss://public:public@public.cloud.shiftr.io", {
@@ -68,14 +65,11 @@ function Inicializar() {
   Columnas = floor(width / Ancho);
   Filas = floor(width / Ancho)
 
-  Mundo = new Array(Columnas);
+  Mundo = [];
+  SiquienteMundo = []
   for (let x = 0; x < Columnas; x++) {
-    Mundo[x] = new Array(Filas);
-  }
-
-  SiquienteMundo = new Array(Columnas);
-  for (let x = 0; x < Columnas; x++) {
-    SiquienteMundo[x] = new Array(Filas);
+    Mundo[x] = [];
+    SiquienteMundo[x]  = []
   }
 
   background(0);
