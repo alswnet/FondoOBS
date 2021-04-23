@@ -10,6 +10,14 @@ let SiquienteMundo;
 let Token;
 let client
 let ColorCuadrados;
+let ListaColores;
+
+function preload() {
+  ListaColores = loadJSON("Colores.json");
+}
+
+
+
 
 function Conectarse() {
   console.log('Conectado a MQTT!');
@@ -28,17 +36,12 @@ function RecivirMensaje(topic, message) {
     Inicializar();
   } else if (topic == "fondo/color") {
     console.log("Cambiar color Animacion")
-    ColorCuadrados = AsignarColor(message.toString());
-  } else if (topic == 'fondo/colorhex'){
-    console.log("El color es "+ message.toString());
+    ColorCuadrados = ObtenerColor(message.toString());
+  } else if (topic == 'fondo/colorhex') {
+    console.log("El color es " + message.toString());
     ColorCuadrados = color(message.toString());
   }
 }
-//
-// function preload() {
-//   let url = 'Token.js';
-//   Token = loadJSON(url);
-// }
 
 function setup() {
   createCanvas(1920, 1080);
@@ -46,13 +49,12 @@ function setup() {
   frameRate(10);
   Inicializar();
 
-  client = mqtt.connect("wss://public:public@public.cloud.shiftr.io ", {
+  client = mqtt.connect("wss://public:public@public.cloud.shiftr.io", {
     clientId: 'Fondo_OBS_' + floor(random(10000))
   });
 
   client.on('connect', Conectarse);
   client.on('message', RecivirMensaje);
-
 }
 
 function draw() {
@@ -111,7 +113,6 @@ function Actualizar() {
           SiquienteMundo[x][y] = 1;
         } else {
           SiquienteMundo[x][y] = Mundo[x][y];
-
         }
       }
 
@@ -139,27 +140,12 @@ function mousePressed() {
   client.publish('fondo/reiniciar', '1');
 }
 
-function AsignarColor(TextoColor) {
-  if (TextoColor == "rojo") {
-    return color(255, 0, 0);
-  } else if (TextoColor == "azul") {
-    return color(0, 0, 255);
-  } else if (TextoColor == "verde") {
-    return color(0, 255, 0);
-  } else if (TextoColor == "blanco") {
-    return color(255);
-  } else if (TextoColor == "gris") {
-    return color(100);
-  } else if (TextoColor == "aqua") {
-    return color(0, 255, 255);
-  } else if (TextoColor == "amarillo") {
-    return color(255, 255, 0);
-  } else if (TextoColor == "naranja") {
-    return color(239, 127, 26);
-  } else if (TextoColor == "morado") {
-    return color(163, 73, 164);
-  } else if (TextoColor == "rosado") {
-    return color(255, 0, 128);
+function ObtenerColor(TextoColor) {
+  TextoColor = TextoColor.toLowerCase();
+  if (TextoColor in ListaColores) {
+    console.log("Color encontrado " +TextoColor + " " + ListaColores[TextoColor]);
+    return ListaColores[TextoColor]
   }
+
   return color(0, 255, 255);
 }
