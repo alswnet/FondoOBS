@@ -9,7 +9,7 @@ class JuegoVida {
     this.Columnas = floor(width / this.Ancho);
     this.Filas = floor(width / this.Ancho);
     this.Color = ObtenerColor("");
-    this.Mundo = []
+    this.Mundo = [];
     this.MundoSiquiente = [];
     for (let x = 0; x < this.Columnas; x++) {
       this.Mundo[x] = [];
@@ -51,7 +51,6 @@ class JuegoVida {
             this.MundoSiquiente[x][y] = this.Mundo[x][y];
           }
         }
-
       }
     }
     let TemporalMundo = this.Mundo;
@@ -60,20 +59,22 @@ class JuegoVida {
   }
 
   Dibujar() {
+    background(0);
     translate(-width / 2, -height / 2);
     for (let x = 0; x < this.Columnas; x++) {
       for (let y = 0; y < this.Filas; y++) {
         if (this.Mundo[x][y] == 1) {
-          fill(this.Color)
+          fill(this.Color);
+          rect(x * this.Ancho, y * this.Ancho, this.Ancho, this.Ancho);
         } else {
-          fill(0, 100)
+          fill(0);
         }
-        rect(x * this.Ancho, y * this.Ancho, this.Ancho, this.Ancho)
+        // rect(x * this.Ancho, y * this.Ancho, this.Ancho, this.Ancho)
       }
     }
   }
 
   CambiarColor(Color) {
-    this.Color = Color
+    this.Color = Color;
   }
 }

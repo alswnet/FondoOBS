@@ -1,6 +1,6 @@
 class Tereno3D {
   constructor() {
-    this.Ancho = floor(10);
+    this.Ancho = floor(30);
     this.AnchoMundo = width * 1.6;
     this.AltoMundo = height;
     this.Columnas = floor(this.AnchoMundo / this.Ancho);
@@ -18,16 +18,15 @@ class Tereno3D {
     frameRate(20);
   }
 
-  Iniciar() {
+  Iniciar() {}
 
-  }
   Actualizar() {
     this.Ruido -= 0.1;
     var YRuido = this.Ruido;
     for (var y = 0; y < this.Filas; y++) {
-      var XRuido = 0
+      var XRuido = 0;
       for (let x = 0; x < this.Columnas; x++) {
-        this.Mundo[x][y] = map(noise(XRuido, YRuido), 0, 1, -10, 100);
+        this.Mundo[x][y] = map(noise(XRuido, YRuido), 0, 1, -100, 100);
         XRuido += 0.2;
       }
       YRuido += 0.2;
@@ -40,12 +39,12 @@ class Tereno3D {
 
     fill(this.Color);
     let ColorFondo = 100;
-    fill(ColorFondo)
+    fill(ColorFondo);
     stroke(this.Color);
     translate(-this.AnchoMundo / 2, -this.AltoMundo / 2);
     for (var y = 0; y < this.Filas - 1; y++) {
       ColorFondo = map(y, 0, this.Filas, 0, 100);
-      fill(ColorFondo)
+      fill(ColorFondo);
       beginShape(TRIANGLE_STRIP);
       for (let x = 0; x < this.Columnas; x++) {
         vertex(x * this.Ancho, y * this.Ancho, this.Mundo[x][y]);
@@ -56,6 +55,6 @@ class Tereno3D {
   }
 
   CambiarColor(Color) {
-    this.Color = Color
+    this.Color = Color;
   }
 }
