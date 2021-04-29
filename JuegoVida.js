@@ -15,10 +15,12 @@ class JuegoVida {
     this.Filas = floor(width / this.Ancho);
     this.Mundo = [];
     this.MundoColor = [];
+    this.MundoColorPasado = [];
     this.MundoSiquiente = [];
     for (let x = 0; x < this.Columnas; x++) {
       this.Mundo[x] = [];
       this.MundoColor[x] = [];
+      this.MundoColorPasado[x] = [];
       this.MundoSiquiente[x] = [];
     }
 
@@ -35,9 +37,9 @@ class JuegoVida {
         } else {
           this.MundoColor[x][y] = 0;
         }
+        this.MundoColorPasado[x][y] = -1;
       }
     }
-
   }
 
   Actualizar() {
@@ -81,22 +83,29 @@ class JuegoVida {
     translate(-width / 2, -height / 2);
     for (let x = 0; x < this.Columnas; x++) {
       for (let y = 0; y < this.Filas; y++) {
-        let ColorActual = this.ArregloColor[this.MundoColor[x][y]];
-        fill(ColorActual);
-        rect(x * this.Ancho, y * this.Ancho, this.Ancho, this.Ancho);
+        if (this.MundoColorPasado[x][y] != this.MundoColor[x][y]) {
+          this.MundoColorPasado[x][y] = this.MundoColor[x][y];
+          let ColorActual = this.ArregloColor[this.MundoColor[x][y]];
+          fill(ColorActual);
+          rect(x * this.Ancho, y * this.Ancho, this.Ancho, this.Ancho);
+        }
       }
     }
   }
 
   CambiarColor(Color) {
     this.Color = color(Color);
-    this.ColorBase = color(0);
+    this.ColorBase = color(255, 0, 0);
     this.CrearColores();
   }
 
   CrearColores() {
     for (let x = 0; x <= this.NivelColor; x++) {
-      this.ArregloColor[x] = lerpColor(this.ColorBase, this.Color, x / this.NivelColor);
+      this.ArregloColor[x] = lerpColor(
+        this.ColorBase,
+        this.Color,
+        x / this.NivelColor
+      );
     }
   }
 }
