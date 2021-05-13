@@ -95,7 +95,8 @@ class JuegoVida {
 
   CambiarColor(Color) {
     this.Color = color(Color);
-    this.ColorBase = color(255, 0, 0);
+    this.ColorBase = color(0, 0, 0);
+    // this.ColorBase = color(255, 0, 0); error futuro
     this.CrearColores();
   }
 
