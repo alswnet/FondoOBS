@@ -1,6 +1,7 @@
-class Tereno3D {
+class Tereno3D extends Animacion {
   constructor() {
-    this.Ancho = floor(30);
+    super();
+    this.Ancho = floor(15);
     this.AnchoMundo = width * 1.6;
     this.AltoMundo = height;
     this.Columnas = floor(this.AnchoMundo / this.Ancho);
@@ -15,7 +16,7 @@ class Tereno3D {
         this.Mundo[x][y] = 0;
       }
     }
-    frameRate(20);
+    // frameRate(20);
   }
 
   Iniciar() {}
@@ -26,7 +27,7 @@ class Tereno3D {
     for (var y = 0; y < this.Filas; y++) {
       var XRuido = 0;
       for (let x = 0; x < this.Columnas; x++) {
-        this.Mundo[x][y] = map(noise(XRuido, YRuido), 0, 1, -100, 100);
+        this.Mundo[x][y] = map(noise(XRuido, YRuido), 0, 1, -200, 200);
         XRuido += 0.2;
       }
       YRuido += 0.2;

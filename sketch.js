@@ -1,21 +1,22 @@
 console.log("Iniciando");
 
-let client;
+let clientMQTT;
 let ListaColores;
-let Animacion;
+let AnimacionActual;
+
+let BrokerMQTT = "wss://public:public@public.cloud.shiftr.io";
 
 function preload() {
   ListaColores = loadJSON("Colores.json");
+  console.log(ListaColores);
 }
 
 function setup() {
   createCanvas(1280, 720, WEBGL);
-  // createCanvas(1280, 720);
-  // fullscreen(true)
-  ColorCuadrados = ObtenerColor("");
-  Animacion = new JuegoVida();
-  // Animacion = new Tereno3D();
-  client = mqtt.connect("wss://public:public@public.cloud.shiftr.io", {
+  AnimacionActual = new JuegoVida();
+  // AnimacionActual = new Tereno3D();
+
+  client = mqtt.connect(BrokerMQTT, {
     clientId: "Fondo_OBS_" + floor(random(10000)),
   });
 
@@ -24,8 +25,8 @@ function setup() {
 }
 
 function draw() {
-  Animacion.Actualizar();
-  Animacion.Dibujar();
+  AnimacionActual.Actualizar();
+  AnimacionActual.Dibujar();
   // console.log(floor(frameRate()));
 }
 
@@ -38,28 +39,29 @@ function RecivirMensaje(topic, message) {
   console.log(topic + ": " + message.toString());
   if (topic == "fondo/reiniciar") {
     console.log("Reiniciando Animacion");
-    Animacion.Iniciar();
+    AnimacionActual.Iniciar();
   } else if (topic == "fondo/color") {
     console.log("Cambiar color Animacion");
     ColorNuevo = ObtenerColor(message.toString());
-    Animacion.CambiarColor(ColorNuevo);
+    AnimacionActual.CambiarColor(ColorNuevo);
   } else if (topic == "fondo/colorhex") {
     console.log("El color es " + message.toString());
     ColorNuevo = color(message.toString());
-    Animacion.CambiarColor(ColorNuevo);
+    AnimacionActual.CambiarColor(ColorNuevo);
   } else if (topic == "fondo/animacion") {
-    CambiarAnimacion = message.toString().toLowerCase();
-    console.log("Cambiando de animacion a " + CambiarAnimacion);
-    if (CambiarAnimacion == "juegovida") {
-      Animacion = new JuegoVida();
-    } else if (CambiarAnimacion == "tereno3d") {
-      Animacion = new Tereno3D();
-    }
+    CambiarAnimacion(message.toString().toLowerCase());
   }
 }
 
-function mousePressed() {
-  client.publish("fondo/reiniciar", "1");
+function CambiarAnimacion(Mensaje) {
+  console.log("Cambiando de animacion a " + Mensaje);
+  if (Mensaje == "juegovida") {
+    AnimacionActual = new JuegoVida();
+  } else if (Mensaje == "tereno3d") {
+    AnimacionActual = new Tereno3D();
+  } else {
+    console.log("Animacion no Encontrada");
+  }
 }
 
 function ObtenerColor(TextoColor) {
@@ -72,4 +74,8 @@ function ObtenerColor(TextoColor) {
   }
 
   return color(0, 255, 255);
+}
+
+function mousePressed() {
+  client.publish("fondo/reiniciar", "1");
 }
