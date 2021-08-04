@@ -16,12 +16,12 @@ function setup() {
   AnimacionActual = new JuegoVida();
   // AnimacionActual = new Tereno3D();
 
-  client = mqtt.connect(BrokerMQTT, {
+  clientMQTT = mqtt.connect(BrokerMQTT, {
     clientId: "Fondo_OBS_" + floor(random(10000)),
   });
 
-  client.on("connect", Conectarse);
-  client.on("message", RecivirMensaje);
+  clientMQTT.on("connect", Conectarse);
+  clientMQTT.on("message", RecivirMensaje);
 }
 
 function draw() {
@@ -32,24 +32,27 @@ function draw() {
 
 function Conectarse() {
   console.log("Conectado a MQTT!");
-  client.subscribe("fondo/#");
+  clientMQTT.subscribe("fondo/#");
 }
 
 function RecivirMensaje(topic, message) {
-  console.log(topic + ": " + message.toString());
+  Mensaje = message.toString().toLowerCase();
+  console.log(topic + ": " + Mensaje);
   if (topic == "fondo/reiniciar") {
     console.log("Reiniciando Animacion");
     AnimacionActual.Iniciar();
   } else if (topic == "fondo/color") {
     console.log("Cambiar color Animacion");
-    ColorNuevo = ObtenerColor(message.toString());
+    ColorNuevo = ObtenerColor(Mensaje);
     AnimacionActual.CambiarColor(ColorNuevo);
   } else if (topic == "fondo/colorhex") {
-    console.log("El color es " + message.toString());
-    ColorNuevo = color(message.toString());
+    console.log("El color es " + Mensaje);
+    ColorNuevo = color(Mensaje);
     AnimacionActual.CambiarColor(ColorNuevo);
   } else if (topic == "fondo/animacion") {
-    CambiarAnimacion(message.toString().toLowerCase());
+    CambiarAnimacion(Mensaje);
+  } else if (topic == "fondo/modo"){
+    AnimacionActual.CambiarModo(Mensaje);
   }
 }
 
@@ -77,5 +80,5 @@ function ObtenerColor(TextoColor) {
 }
 
 function mousePressed() {
-  client.publish("fondo/reiniciar", "1");
+  clientMQTT.publish("fondo/reiniciar", "1");
 }

@@ -7,12 +7,14 @@ class JuegoVida extends Animacion {
     this.ColorBase = color(0);
     this.ArregloColor = [];
     this.CrearColores();
+    this.DimencionMinima = 10;
+    this.DimencionMaxima = 20;
     this.Iniciar();
-   
   }
 
   Iniciar() {
-    this.Ancho = floor(random(5, 20));
+    this.Ancho = floor(random(this.DimencionMinima, this.DimencionMaxima));
+    console.log("Ancho de la celula "+this.Ancho);
     this.Columnas = floor(width / this.Ancho);
     this.Filas = floor(width / this.Ancho);
     this.Mundo = [];
@@ -69,6 +71,13 @@ class JuegoVida extends Animacion {
           }
         }
 
+        if (this.Modo == "ruido") {
+          if (Vecinos > 1 && random(10000) < 1) {
+            console.log("Agregando Ruido")
+            this.MundoSiquiente[x][y] = 1;
+          }
+        }
+
         if (this.MundoSiquiente[x][y] == 1) {
           this.MundoColor[x][y] = this.NivelColor;
         } else if (this.MundoColor[x][y] > 0) {
@@ -81,6 +90,7 @@ class JuegoVida extends Animacion {
     this.MundoSiquiente = TemporalMundo;
   }
 
+  // TODO: Error con colores en Cambio de animacion
   Dibujar() {
     translate(-width / 2, -height / 2);
     for (let x = 0; x < this.Columnas; x++) {
@@ -92,6 +102,19 @@ class JuegoVida extends Animacion {
           rect(x * this.Ancho, y * this.Ancho, this.Ancho, this.Ancho);
         }
       }
+    }
+  }
+
+  CambiarModo(Mensaje) {
+    super.CambiarModo(Mensaje);
+    if (Mensaje == "normal") {
+      console.log("Cambiando a Modo: normal");
+      this.Modo = "normal";
+    } else if (Mensaje == "ruido") {
+      console.log("Cambiando a Modo: ruido")
+      this.Modo = "ruido";
+    } else {
+      console.log("No Existe Modo: " + Mensaje);
     }
   }
 
