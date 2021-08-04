@@ -14,7 +14,7 @@ class JuegoVida extends Animacion {
 
   Iniciar() {
     this.Ancho = floor(random(this.DimencionMinima, this.DimencionMaxima));
-    console.log("Ancho de la celula "+this.Ancho);
+    console.log("Ancho de la celula " + this.Ancho);
     this.Columnas = floor(width / this.Ancho);
     this.Filas = floor(width / this.Ancho);
     this.Mundo = [];
@@ -47,6 +47,7 @@ class JuegoVida extends Animacion {
   }
 
   Actualizar() {
+    let AunVivas = false;
     for (let x = 1; x < this.Columnas - 1; x++) {
       for (let y = 1; y < this.Filas - 1; y++) {
         let Vecinos = 0;
@@ -73,13 +74,13 @@ class JuegoVida extends Animacion {
 
         if (this.Modo == "ruido") {
           if (Vecinos > 1 && random(10000) < 1) {
-            console.log("Agregando Ruido")
             this.MundoSiquiente[x][y] = 1;
           }
         }
 
         if (this.MundoSiquiente[x][y] == 1) {
           this.MundoColor[x][y] = this.NivelColor;
+          if (!AunVivas) AunVivas = true;
         } else if (this.MundoColor[x][y] > 0) {
           this.MundoColor[x][y]--;
         }
@@ -88,6 +89,10 @@ class JuegoVida extends Animacion {
     let TemporalMundo = this.Mundo;
     this.Mundo = this.MundoSiquiente;
     this.MundoSiquiente = TemporalMundo;
+
+    if (!AunVivas) {
+      this.Iniciar();
+    }
   }
 
   // TODO: Error con colores en Cambio de animacion
@@ -111,7 +116,7 @@ class JuegoVida extends Animacion {
       console.log("Cambiando a Modo: normal");
       this.Modo = "normal";
     } else if (Mensaje == "ruido") {
-      console.log("Cambiando a Modo: ruido")
+      console.log("Cambiando a Modo: ruido");
       this.Modo = "ruido";
     } else {
       console.log("No Existe Modo: " + Mensaje);
