@@ -5,6 +5,8 @@ class JuegoVida extends Animacion {
     this.Color = ObtenerColor("");
     this.NivelColor = 5;
     this.ColorBase = color(0);
+    this.ColorSecundario = color(0);
+    this.ColorLinea = color(0);
     this.ArregloColor = [];
     this.CrearColores();
     this.DimencionMinima = 10;
@@ -97,6 +99,7 @@ class JuegoVida extends Animacion {
 
   // TODO: Error con colores en Cambio de animacion
   Dibujar() {
+    stroke(this.ColorLinea);
     translate(-width / 2, -height / 2);
     for (let x = 0; x < this.Columnas; x++) {
       for (let y = 0; y < this.Filas; y++) {
