@@ -35,11 +35,6 @@ class JuegoVida extends Animacion {
     for (let x = 0; x < this.Columnas; x++) {
       for (let y = 0; y < this.Filas; y++) {
         this.Mundo[x][y] = floor(random(2));
-        // if (x == 0 || y == 0 || x == this.Columnas - 1 || y == this.Filas - 1) {
-        //   this.Mundo[x][y] = 0;
-        // } else {
-        //   this.Mundo[x][y] = floor(random(2));
-        // }
 
         if (this.Mundo[x][y] >= 1) {
           this.MundoColor[x][y] = this.NivelColor;
@@ -60,12 +55,20 @@ class JuegoVida extends Animacion {
         for (let i = -1; i <= 1; i++) {
           for (let j = -1; j <= 1; j++) {
             // Revisar los border para no sobrebordar el mundo
-            if ((x == 0 && i == -1) || (x == this.Columnas - 1 && i == 1)) {
-              continue;
-            } else if ((y == 0 && j == -1) || (y == this.Filas - 1 && j == 1)) {
-              continue;
-            } else if (!(i == 0 && j == 0)) {
-              Vecinos += this.Mundo[x + i][y + j];
+            if (!(i == 0 && j == 0)) {
+              let Px = x + i;
+              let Py = y + j;
+              if (x == 0 && i == -1) {
+                Px = this.Columnas - 1;
+              } else if (x == this.Columnas - 1 && i == 1) {
+                Px = 0;
+              } else if (y == 0 && j == -1) {
+                Py = this.Filas - 1;
+              } else if (y == this.Filas - 1 && j == 1) {
+                Py = 0;
+              }
+
+              Vecinos += this.Mundo[Px][Py];
             }
           }
         }
