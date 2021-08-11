@@ -5,13 +5,14 @@ class JuegoVida extends Animacion {
     // Colores Sistema
     this.ColorBase = ObtenerColor(null);
     this.ColorSecundario = color(0);
+    this.ColorLinea = color(0, 30, 30);
     this.NivelColor = 5;
     this.ArregloColor = [];
-    this.ColorLinea = color(0, 30, 30);
     this.CrearColores();
     this.DimencionMinima = 10;
     this.DimencionMaxima = 20;
     this.Iniciar();
+    strokeWeight(2);
   }
 
   Iniciar() {
@@ -110,10 +111,9 @@ class JuegoVida extends Animacion {
     }
   }
 
-  // TODO: Error con colores en Cambio de animacion
   Dibujar() {
     stroke(this.ColorLinea);
-    translate(-width / 2, -height / 2);
+    // translate(-width / 2, -height / 2);
     for (let x = 0; x < this.Columnas; x++) {
       for (let y = 0; y < this.Filas; y++) {
         if (this.MundoColorPasado[x][y] != this.MundoColor[x][y]) {
@@ -128,12 +128,9 @@ class JuegoVida extends Animacion {
 
   CambiarModo(Mensaje) {
     super.CambiarModo(Mensaje);
-    if (Mensaje == "normal") {
-      console.log("Cambiando a Modo: normal");
-      this.Modo = "normal";
-    } else if (Mensaje == "ruido") {
-      console.log("Cambiando a Modo: ruido");
-      this.Modo = "ruido";
+    if (Mensaje == "normal" || Mensaje == "ruido") {
+      console.log("Cambiando a Modo: " + Mensaje);
+      this.Modo = Mensaje;
     } else {
       console.log("No Existe Modo: " + Mensaje);
     }
@@ -146,7 +143,6 @@ class JuegoVida extends Animacion {
 
   CambiarColorLinea(NuevoColor) {
     super.CambiarColorLinea(NuevoColor);
-    // this.CrearColores();
   }
 
   CambiarColorSecundario(NuevoColor) {

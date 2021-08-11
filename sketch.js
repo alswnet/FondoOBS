@@ -12,9 +12,11 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1280, 720, WEBGL);
+  // createCanvas(1280, 720, WEBGL);
+  createCanvas(1280, 720);
   AnimacionActual = new JuegoVida();
   // AnimacionActual = new Tereno3D();
+  // AnimacionActual = new WavyField();
 
   clientMQTT = mqtt.connect(BrokerMQTT, {
     clientId: "Fondo_OBS_" + floor(random(10000)),
@@ -78,9 +80,12 @@ function CambiarAnimacion(Mensaje) {
     AnimacionActual = new JuegoVida();
   } else if (Mensaje == "tereno3d") {
     AnimacionActual = new Tereno3D();
+  } else if (Mensaje == "wavyfield") {
+    AnimacionActual = new WavyField();
   } else {
     console.log("Animacion no Encontrada");
   }
+  // TODO: Agregar Animacion Randon
 }
 
 function ObtenerColor(TextoColor) {
