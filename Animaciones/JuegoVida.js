@@ -2,12 +2,12 @@ class JuegoVida extends Animacion {
   constructor() {
     super();
     console.log("Iniciando Juego de la Vida");
-    this.Color = ObtenerColor("");
-    this.NivelColor = 5;
-    this.ColorBase = color(0);
+    // Colores Sistema
+    this.ColorBase = ObtenerColor(null);
     this.ColorSecundario = color(0);
-    this.ColorLinea = color(0);
+    this.NivelColor = 5;
     this.ArregloColor = [];
+    this.ColorLinea = color(0, 30, 30);
     this.CrearColores();
     this.DimencionMinima = 10;
     this.DimencionMaxima = 20;
@@ -126,19 +126,29 @@ class JuegoVida extends Animacion {
     }
   }
 
-  CambiarColor(Color) {
-    this.Color = color(Color);
-    this.ColorBase = color(255, 0, 0);
+  CambiarColorBase(NuevoColor) {
+    super.CambiarColorBase(NuevoColor);
+    this.CrearColores();
+  }
+
+  CambiarColorLinea(NuevoColor) {
+    super.CambiarColorLinea(NuevoColor);
+    // this.CrearColores();
+  }
+
+  CambiarColorSecundario(NuevoColor) {
+    super.CambiarColorSecundario(NuevoColor);
     this.CrearColores();
   }
 
   CrearColores() {
     for (let x = 0; x <= this.NivelColor; x++) {
       this.ArregloColor[x] = lerpColor(
+        this.ColorSecundario,
         this.ColorBase,
-        this.Color,
         x / this.NivelColor
       );
     }
+    this.ColorLinea = lerpColor(this.ColorBase, this.ColorSecundario, 2 / 3);
   }
 }

@@ -1,6 +1,9 @@
 class Animacion {
   constructor() {
     this.Modo = "normal";
+    this.ColorBase;
+    this.ColorSecundario;
+    this.ColorLinea;
   }
 
   Iniciar() {}
@@ -9,9 +12,19 @@ class Animacion {
 
   Dibujar() {}
 
-  CambiarColor() {}
+  CambiarColorBase(NuevoColor) {
+    this.ColorBase = color(NuevoColor);
+  }
 
-  CambiarModo(Modo){
-      console.log("Intentando Cambiar a Modo: "+ Modo);
+  CambiarColorLinea(NuevoColor) {
+    this.ColorLinea = color(NuevoColor);
+  }
+
+  CambiarColorSecundario(NuevoColor) {
+    this.ColorSecundario = color(NuevoColor);
+  }
+
+  CambiarModo(Modo) {
+    console.log("Intentando Cambiar a Modo: " + Modo);
   }
 }

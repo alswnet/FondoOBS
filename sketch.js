@@ -37,23 +37,39 @@ function Conectarse() {
 
 function RecivirMensaje(topic, message) {
   Mensaje = message.toString().toLowerCase();
+  topic = topic.toString();
   console.log(topic + ": " + Mensaje);
   if (topic == "fondo/reiniciar") {
     console.log("Reiniciando Animacion");
     AnimacionActual.Iniciar();
-  } else if (topic == "fondo/color") {
-    console.log("Cambiar color Animacion");
-    ColorNuevo = ObtenerColor(Mensaje);
-    AnimacionActual.CambiarColor(ColorNuevo);
-  } else if (topic == "fondo/colorhex") {
-    console.log("El color es " + Mensaje);
-    ColorNuevo = color(Mensaje);
-    AnimacionActual.CambiarColor(ColorNuevo);
+  } else if (topic.startsWith("fondo/color")) {
+    FuncionesColor(topic, Mensaje);
   } else if (topic == "fondo/animacion") {
     CambiarAnimacion(Mensaje);
-  } else if (topic == "fondo/modo"){
+  } else if (topic == "fondo/modo") {
     AnimacionActual.CambiarModo(Mensaje);
   }
+}
+
+function FuncionesColor(topic, Mensaje) {
+  if (topic == "fondo/color/base") {
+    console.log("Cambiar color Base Animacion");
+    ColorNuevo = ObtenerColor(Mensaje);
+    AnimacionActual.CambiarColorBase(ColorNuevo);
+  } else if (topic == "fondo/color/base/hex") {
+    console.log("El color es " + Mensaje);
+    ColorNuevo = color(Mensaje);
+    AnimacionActual.CambiarColorBase(ColorNuevo);
+  } else if (topic == "fondo/color/linea") {
+    console.log("Cambiar color Linea Animacion");
+    ColorNuevo = ObtenerColor(Mensaje);
+    AnimacionActual.CambiarColorLinea(ColorNuevo);
+  } else if (topic == "fondo/color/secundario") {
+    console.log("Cambiar color Secundario Animacion");
+    ColorNuevo = ObtenerColor(Mensaje);
+    AnimacionActual.CambiarColorSecundario(ColorNuevo);
+  }
+  // TODO: Agregar color Randon
 }
 
 function CambiarAnimacion(Mensaje) {
@@ -68,6 +84,11 @@ function CambiarAnimacion(Mensaje) {
 }
 
 function ObtenerColor(TextoColor) {
+  if (TextoColor === null) {
+    return color(0, 255, 255);
+    // Color Por Defecto Aqua
+  }
+
   TextoColor = TextoColor.toLowerCase();
   if (TextoColor in ListaColores) {
     console.log(
