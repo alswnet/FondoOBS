@@ -15,6 +15,7 @@ class JuegoVida extends Animacion {
   }
 
   Iniciar() {
+    background(this.ColorSecundario);
     this.Modo = "ruido";
     this.Ancho = floor(random(this.DimencionMinima, this.DimencionMaxima));
     console.log("Ancho de la celula " + this.Ancho);
@@ -33,11 +34,12 @@ class JuegoVida extends Animacion {
 
     for (let x = 0; x < this.Columnas; x++) {
       for (let y = 0; y < this.Filas; y++) {
-        if (x == 0 || y == 0 || x == this.Columnas - 1 || y == this.Filas - 1) {
-          this.Mundo[x][y] = 0;
-        } else {
-          this.Mundo[x][y] = floor(random(2));
-        }
+        this.Mundo[x][y] = floor(random(2));
+        // if (x == 0 || y == 0 || x == this.Columnas - 1 || y == this.Filas - 1) {
+        //   this.Mundo[x][y] = 0;
+        // } else {
+        //   this.Mundo[x][y] = floor(random(2));
+        // }
 
         if (this.Mundo[x][y] >= 1) {
           this.MundoColor[x][y] = this.NivelColor;
@@ -50,17 +52,24 @@ class JuegoVida extends Animacion {
   }
 
   Actualizar() {
-    let AunVivas = false;
-    for (let x = 1; x < this.Columnas - 1; x++) {
-      for (let y = 1; y < this.Filas - 1; y++) {
+    let AunVivas = false; // Si no hay mas celular Reinicar el mundos
+
+    for (let x = 0; x < this.Columnas; x++) {
+      for (let y = 0; y < this.Filas; y++) {
         let Vecinos = 0;
         for (let i = -1; i <= 1; i++) {
           for (let j = -1; j <= 1; j++) {
-            if (!(i == 0 && j == 0)) {
+            // Revisar los border para no sobrebordar el mundo
+            if ((x == 0 && i == -1) || (x == this.Columnas - 1 && i == 1)) {
+              continue;
+            } else if ((y == 0 && j == -1) || (y == this.Filas - 1 && j == 1)) {
+              continue;
+            } else if (!(i == 0 && j == 0)) {
               Vecinos += this.Mundo[x + i][y + j];
             }
           }
         }
+
         if (this.Mundo[x][y] == 1) {
           if (Vecinos > 3 || Vecinos < 2) {
             this.MundoSiquiente[x][y] = 0;
@@ -75,7 +84,7 @@ class JuegoVida extends Animacion {
           }
         }
 
-        if (this.Modo == "ruido") {
+        if (this.Modo == "ruido" && this.MundoSiquiente[x][y] == 0) {
           if (Vecinos > 1 && random(10000) < 1) {
             this.MundoSiquiente[x][y] = 1;
           }
