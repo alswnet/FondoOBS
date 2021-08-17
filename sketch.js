@@ -66,7 +66,7 @@ function FuncionesColor(topic, Mensaje) {
     console.log("Cambiar color Linea Animacion");
     ColorNuevo = ObtenerColor(Mensaje);
     AnimacionActual.CambiarColorLinea(ColorNuevo);
-  } else if (topic == "fondo/color/secundario") {
+  } else if (topic == "fondo/color/fondo") {
     console.log("Cambiar color Secundario Animacion");
     ColorNuevo = ObtenerColor(Mensaje);
     AnimacionActual.CambiarColorSecundario(ColorNuevo);
