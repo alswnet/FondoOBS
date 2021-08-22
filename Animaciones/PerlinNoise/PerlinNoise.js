@@ -5,6 +5,7 @@ class PerlinNoise extends Animacion {
     this.ColorBase = ObtenerColor(null);
     this.ColorSecundario = color(0);
     this.ColorLinea = color(0, 30, 30);
+    this.particles = [];
     this.Iniciar();
   }
 
