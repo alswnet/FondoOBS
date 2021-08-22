@@ -89,7 +89,7 @@ function ObtenerColor(TextoColor) {
     // Color Por Defecto Aqua
   }
 
-  TextoColor = TextoColor.toLowerCase();
+  TextoColor = TextoColor.toLowerCase().replace(/\r?\n|\r/g, "");;
   if (TextoColor in ListaColores) {
     console.log(
       "Color encontrado " + TextoColor + " " + ListaColores[TextoColor]
