@@ -15,6 +15,7 @@ function setup() {
   // createCanvas(1280, 720, WEBGL);
   createCanvas(1280, 720);
   AnimacionActual = new JuegoVida();
+  // AnimacionActual = new PerlinNoise();
   // AnimacionActual = new Tereno3D();
   // AnimacionActual = new WavyField();
 
@@ -82,6 +83,8 @@ function CambiarAnimacion(Mensaje) {
     AnimacionActual = new Tereno3D();
   } else if (Mensaje == "wavyfield") {
     AnimacionActual = new WavyField();
+  } else if (Mensaje == "perlinnoise") {
+    AnimacionActual = new PerlinNoise();
   } else {
     console.log("Animacion no Encontrada");
   }
