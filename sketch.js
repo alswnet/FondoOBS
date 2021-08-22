@@ -5,6 +5,7 @@ let ListaColores;
 let AnimacionActual;
 
 let BrokerMQTT = "wss://public:public@public.cloud.shiftr.io";
+let ExprecionColores = /^#[0-9a-f]{3,6}$/i;
 
 function preload() {
   ListaColores = loadJSON("Colores.json");
@@ -39,7 +40,7 @@ function Conectarse() {
 }
 
 function RecivirMensaje(topic, message) {
-  Mensaje = message.toString().toLowerCase();
+  Mensaje = message.toString().toLowerCase().replace(/\r?\n|\r/g, "");
   topic = topic.toString();
   console.log(topic + ": " + Mensaje);
   if (topic == "fondo/reiniciar") {
@@ -55,21 +56,15 @@ function RecivirMensaje(topic, message) {
 }
 
 function FuncionesColor(topic, Mensaje) {
+  ColorNuevo = ObtenerColor(Mensaje);
   if (topic == "fondo/color/base") {
     console.log("Cambiar color Base Animacion");
-    ColorNuevo = ObtenerColor(Mensaje);
-    AnimacionActual.CambiarColorBase(ColorNuevo);
-  } else if (topic == "fondo/color/base/hex") {
-    console.log("El color es " + Mensaje);
-    ColorNuevo = color(Mensaje);
     AnimacionActual.CambiarColorBase(ColorNuevo);
   } else if (topic == "fondo/color/linea") {
     console.log("Cambiar color Linea Animacion");
-    ColorNuevo = ObtenerColor(Mensaje);
     AnimacionActual.CambiarColorLinea(ColorNuevo);
   } else if (topic == "fondo/color/fondo") {
     console.log("Cambiar color Secundario Animacion");
-    ColorNuevo = ObtenerColor(Mensaje);
     AnimacionActual.CambiarColorSecundario(ColorNuevo);
   }
   // TODO: Agregar color Randon
@@ -97,12 +92,15 @@ function ObtenerColor(TextoColor) {
     // Color Por Defecto Aqua
   }
 
-  TextoColor = TextoColor.toLowerCase();
   if (TextoColor in ListaColores) {
     console.log(
       "Color encontrado " + TextoColor + " " + ListaColores[TextoColor]
     );
     return ListaColores[TextoColor];
+  }
+
+  if (ExprecionColores.test(TextoColor)) {
+    return color(TextoColor);
   }
 
   return color(0, 255, 255);
