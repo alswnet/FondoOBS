@@ -19,7 +19,6 @@ class JuegoVida extends Animacion {
     background(this.ColorSecundario);
     this.Modo = "ruido";
     this.Ancho = floor(random(this.DimencionMinima, this.DimencionMaxima));
-    console.log("Ancho de la celula " + this.Ancho);
     this.Columnas = floor(width / this.Ancho);
     this.Filas = floor(width / this.Ancho);
     this.Mundo = [];
