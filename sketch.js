@@ -39,7 +39,7 @@ function Conectarse() {
 }
 
 function RecivirMensaje(topic, message) {
-  Mensaje = message.toString().toLowerCase();
+  Mensaje = message.toString().toLowerCase().replace(/\r?\n|\r/g, "");
   topic = topic.toString();
   console.log(topic + ": " + Mensaje);
   if (topic == "fondo/reiniciar") {
@@ -89,7 +89,6 @@ function ObtenerColor(TextoColor) {
     // Color Por Defecto Aqua
   }
 
-  TextoColor = TextoColor.toLowerCase().replace(/\r?\n|\r/g, "");;
   if (TextoColor in ListaColores) {
     console.log(
       "Color encontrado " + TextoColor + " " + ListaColores[TextoColor]
