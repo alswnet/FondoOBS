@@ -41,9 +41,13 @@ function Conectarse() {
 }
 
 function RecivirMensaje(topic, message) {
-  Mensaje = message.toString().toLowerCase().replace(/\r?\n|\r/g, "");
+  Mensaje = message
+    .toString()
+    .toLowerCase()
+    .replace(/\r?\n|\r/g, "");
   topic = topic.toString();
-  console.log(topic + ": " + Mensaje);
+  console.log(`Topic[${topic}]: "${Mensaje}"`);
+  // console.log(topic + ": " + Mensaje);
   if (topic == "fondo/reiniciar") {
     console.log("Reiniciando Animacion");
     AnimacionActual.Iniciar();
@@ -68,7 +72,6 @@ function FuncionesColor(topic, Mensaje) {
     console.log("Cambiar color Secundario Animacion");
     AnimacionActual.CambiarColorSecundario(ColorNuevo);
   }
-  // TODO: Agregar color Randon
 }
 
 function CambiarAnimacion(Mensaje) {
@@ -80,7 +83,7 @@ function CambiarAnimacion(Mensaje) {
   } else if (Mensaje == "wavyfield") {
     AnimacionActual = new WavyField();
   } else if (Mensaje == "perlinnoise") {
-    AnimacionActual = new PerlinNoise(); 
+    AnimacionActual = new PerlinNoise();
   } else if (Mensaje == "startfield") {
     AnimacionActual = new StartField();
   } else {
@@ -95,17 +98,28 @@ function ObtenerColor(TextoColor) {
     // Color Por Defecto Aqua
   }
 
+  if (TextoColor === "random") {
+    let R = floor(random(0, 255));
+    let G = floor(random(0, 255));
+    let B = floor(random(0, 255));
+    let ColorRandon = color(R, G, B);
+    console.log(`Color randon ${ColorRandon}`);
+    return ColorRandon;
+  }
+
   if (TextoColor in ListaColores) {
     console.log(
-      "Color encontrado " + TextoColor + " " + ListaColores[TextoColor]
+      `Color encontrado en lista ${TextoColor} - ${ListaColores[TextoColor]}`
     );
     return ListaColores[TextoColor];
   }
 
   if (ExprecionColores.test(TextoColor)) {
+    console.log(`Color con exprecion regular`)
     return color(TextoColor);
   }
 
+  console.log(`Color no encontrado usando defaul`);
   return color(0, 255, 255);
 }
 
