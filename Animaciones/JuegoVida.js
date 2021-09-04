@@ -56,16 +56,23 @@ class JuegoVida extends Animacion {
           for (let j = -1; j <= 1; j++) {
             // Revisar los border para no sobrebordar el mundo
             if (!(i == 0 && j == 0)) {
-              let Px = x + i;
-              let Py = y + j;
+              let Px;
+              let Py;
+
               if (x == 0 && i == -1) {
                 Px = this.Columnas - 1;
               } else if (x == this.Columnas - 1 && i == 1) {
                 Px = 0;
-              } else if (y == 0 && j == -1) {
+              } else {
+                Px = x + i;
+              }
+
+              if (y == 0 && j == -1) {
                 Py = this.Filas - 1;
               } else if (y == this.Filas - 1 && j == 1) {
                 Py = 0;
+              } else {
+                Py = y + j;
               }
 
               Vecinos += this.Mundo[Px][Py];
