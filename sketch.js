@@ -17,8 +17,7 @@ function preload() {
 }
 
 function setup() {
-  // createCanvas(1280, 720, WEBGL);
-  createCanvas(1280, 720);
+  createCanvas(windowWidth, windowHeight);
   CambiarAlgoritmo(ListaAlgoritmos[AlgoritmoActual]);
   ConectarMQTT();
 }
