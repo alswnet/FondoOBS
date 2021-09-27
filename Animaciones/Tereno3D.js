@@ -6,7 +6,7 @@ class Tereno3D extends Animacion {
     this.AltoMundo = height;
     this.Columnas = floor(this.AnchoMundo / this.Ancho);
     this.Filas = floor(this.AnchoMundo / this.Ancho);
-    this.Color = ObtenerColor("");
+    this.Color = ObtenerColor(null);
     this.Mundo = [];
     this.Ruido = 0;
 
