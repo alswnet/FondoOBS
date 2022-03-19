@@ -62,6 +62,9 @@ function CambiarAlgoritmo(Operacion) {
     case "startfield":
       AnimacionActual = new StartField();
       break;
+    case "dvd":
+      AnimacionActual = new DVD();
+      break;
     case "random":
       let NumeroRandom = 0;
       let CantidadAlgoritmos = Object.values(ListaAlgoritmos).length;
@@ -107,5 +110,16 @@ function ObtenerColor(TextoColor) {
 }
 
 function mousePressed() {
-  clientMQTT.publish("fondo/reiniciar", "1");
+  clientMQTT.publish("fondo/color/base", "random");
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
+
+function keyPressed() {
+  // print(keyCode);
+  if (keyCode == 82) {
+    clientMQTT.publish("fondo/reiniciar", "1");
+  }
 }
