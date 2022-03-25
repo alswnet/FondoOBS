@@ -90,9 +90,9 @@ function ObtenerColor(TextoColor) {
     let R = floor(random(0, 255));
     let G = floor(random(0, 255));
     let B = floor(random(0, 255));
-    let ColorRandon = color(R, G, B);
-    console.log(`Color randon ${ColorRandon}`);
-    return ColorRandon;
+    let ColorRandom = color(R, G, B);
+    console.log(`Color random ${ColorRandom}`);
+    return ColorRandom;
   }
 
   if (TextoColor in ListaColores) {
@@ -121,5 +121,8 @@ function keyPressed() {
   // print(keyCode);
   if (keyCode == 82) {
     clientMQTT.publish("fondo/reiniciar", "1");
+  } else if (keyCode == 32) {
+    // TODO Agregar código para pausar algoritmo
+    print("Pausar");
   }
 }
