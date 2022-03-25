@@ -44,6 +44,7 @@ class Caja {
     this.rBorde = this.CalcularRango(red(ColorBorde));
     this.gBorde = this.CalcularRango(green(ColorBorde));
     this.bBorde = this.CalcularRango(blue(ColorBorde));
+    this.transparencia = random(50, 255);
   }
 
   CalcularRango(Nivel) {

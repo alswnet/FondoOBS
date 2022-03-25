@@ -34,6 +34,13 @@ class DVD extends Animacion {
     }
   }
 
+  CambiarColorLinea(NuevoColor) {
+    this.ColorLinea = color(NuevoColor);
+    for (let i = 0; i < this.cajas.length; i++) {
+      this.cajas[i].cambiarBorde(this.ColorLinea);
+    }
+  }
+
   CambiarColorSecundario(NuevoColor) {
     this.CambiarColorBase(NuevoColor);
   }
