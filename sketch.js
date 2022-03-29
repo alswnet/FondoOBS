@@ -6,7 +6,9 @@ let ListaAlgoritmos;
 let AnimacionActual;
 let AlgoritmoActual = 0;
 
-let BrokerMQTT = "wss://public:public@public.cloud.shiftr.io";
+// let BrokerMQTT = "wss://public:public@public.cloud.shiftr.io";
+let ArchivoMQTT = "token/mqtt.json";
+let DataMQTT;
 let ExprecionColores = /^#[0-9a-f]{3,6}$/i;
 
 function preload() {
@@ -14,6 +16,8 @@ function preload() {
   ListaAlgoritmos = loadJSON("Algoritmos.json");
   console.log(ListaColores);
   console.log(ListaAlgoritmos);
+  DataMQTT = loadJSON(ArchivoMQTT);
+  // Usar callbask para dos servidores
 }
 
 function setup() {
@@ -46,7 +50,7 @@ function FuncionesColor(Operacion, Mensaje) {
 }
 
 function CambiarAlgoritmo(Operacion) {
-  switch (Operacion) {
+  switch (Operacion.toLowerCase()) {
     case "juegovida":
       AnimacionActual = new JuegoVida();
       break;
