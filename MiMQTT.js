@@ -3,7 +3,7 @@ let TopicBase = ["fondo/#", "alsw/#"];
 function ConectarMQTT() {
   console.log(`Intentando conectar a MQTT ${DataMQTT.broker}`);
 
-  // let BrokerMQTT = `${DataMQTT.protocolo}://${DataMQTT.user}:${DataMQTT.pass}@${DataMQTT.broker}:${DataMQTT.puerto}`;
+  let BrokerMQTT = `${DataMQTT.protocolo}://${DataMQTT.user}:${DataMQTT.pass}@${DataMQTT.broker}:${DataMQTT.puerto}`;
   clientMQTT = mqtt.connect(BrokerMQTT, {
     clientId: "Fondo_OBS_" + floor(random(10000)),
   });
