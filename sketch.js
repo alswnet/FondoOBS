@@ -6,7 +6,9 @@ let ListaAlgoritmos;
 let AnimacionActual;
 let AlgoritmoActual = 0;
 
-let BrokerMQTT = "wss://public:public@public.cloud.shiftr.io";
+// let BrokerMQTT = "wss://public:public@public.cloud.shiftr.io";
+let ArchivoMQTT = "token/mqtt.json";
+let DataMQTT;
 let ExprecionColores = /^#[0-9a-f]{3,6}$/i;
 
 function preload() {
@@ -14,6 +16,8 @@ function preload() {
   ListaAlgoritmos = loadJSON("Algoritmos.json");
   console.log(ListaColores);
   console.log(ListaAlgoritmos);
+  DataMQTT = loadJSON(ArchivoMQTT);
+  // Usar callbask para dos servidores
 }
 
 function setup() {
@@ -46,7 +50,7 @@ function FuncionesColor(Operacion, Mensaje) {
 }
 
 function CambiarAlgoritmo(Operacion) {
-  switch (Operacion) {
+  switch (Operacion.toLowerCase()) {
     case "juegovida":
       AnimacionActual = new JuegoVida();
       break;
@@ -61,6 +65,9 @@ function CambiarAlgoritmo(Operacion) {
       break;
     case "startfield":
       AnimacionActual = new StartField();
+      break;
+    case "dvd":
+      AnimacionActual = new DVD();
       break;
     case "random":
       let NumeroRandom = 0;
@@ -87,9 +94,9 @@ function ObtenerColor(TextoColor) {
     let R = floor(random(0, 255));
     let G = floor(random(0, 255));
     let B = floor(random(0, 255));
-    let ColorRandon = color(R, G, B);
-    console.log(`Color randon ${ColorRandon}`);
-    return ColorRandon;
+    let ColorRandom = color(R, G, B);
+    console.log(`Color random ${ColorRandom}`);
+    return ColorRandom;
   }
 
   if (TextoColor in ListaColores) {
@@ -107,5 +114,19 @@ function ObtenerColor(TextoColor) {
 }
 
 function mousePressed() {
-  clientMQTT.publish("fondo/reiniciar", "1");
+  clientMQTT.publish("fondo/color/base", "random");
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
+
+function keyPressed() {
+  // print(keyCode);
+  if (keyCode == 82) {
+    clientMQTT.publish("fondo/reiniciar", "1");
+  } else if (keyCode == 32) {
+    // TODO Agregar código para pausar algoritmo
+    print("Pausar");
+  }
 }

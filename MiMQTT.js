@@ -1,7 +1,9 @@
 let TopicBase = ["fondo/#", "alsw/#"];
 
 function ConectarMQTT() {
-  console.log("Intentnado conectar a MQTT");
+  console.log(`Intentando conectar a MQTT ${DataMQTT.broker}`);
+
+  let BrokerMQTT = `${DataMQTT.protocolo}://${DataMQTT.user}:${DataMQTT.pass}@${DataMQTT.broker}:${DataMQTT.puerto}`;
   clientMQTT = mqtt.connect(BrokerMQTT, {
     clientId: "Fondo_OBS_" + floor(random(10000)),
   });
@@ -11,7 +13,7 @@ function ConectarMQTT() {
 }
 
 function ConectadoMQTT() {
-  console.log(`Conectado a MQTT!`);
+  console.log(`Conectado a MQTT! ${DataMQTT.broker}`);
   for (let i = 0; i < TopicBase.length; i++) {
     console.log(`Subcribiendose a ${TopicBase[i]}`);
     clientMQTT.subscribe(TopicBase[i]);
