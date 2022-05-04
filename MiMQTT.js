@@ -1,4 +1,4 @@
-let TopicBase = ["fondo/#", "alsw/#"];
+let TopicBase = ["alsw/fondoOBS/#"];
 
 function ConectarMQTT() {
   console.log(`Intentando conectar a MQTT ${DataMQTT.broker}`);
@@ -15,7 +15,7 @@ function ConectarMQTT() {
 function ConectadoMQTT() {
   console.log(`Conectado a MQTT! ${DataMQTT.broker}`);
   for (let i = 0; i < TopicBase.length; i++) {
-    console.log(`Subcribiendose a ${TopicBase[i]}`);
+    console.log(`Subscribiéndose a ${TopicBase[i]}`);
     clientMQTT.subscribe(TopicBase[i]);
   }
 }
@@ -29,32 +29,37 @@ function RecivirMensaje(topic, message) {
   console.log(`Topic[${topic}]: "${Mensaje}"`);
   let ListaTopic = topic.split("/");
   Base = ListaTopic.shift();
-  switch (Base) {
-    case "fondo":
-      Operacion = ListaTopic.shift();
-      switch (Operacion) {
-        case "reiniciar":
-          console.log("Reiniciando[algoritmo]");
-          AnimacionActual.Iniciar();
-          break;
+  switch(Base){
+    case "alsw":
+      Base = ListaTopic.shift();
+      switch (Base) {
+        case "fondoOBS":
+          Operacion = ListaTopic.shift();
+          switch (Operacion) {
+            case "reiniciar":
+              console.log("Reiniciando[algoritmo]");
+              AnimacionActual.Iniciar();
+              break;
         case "animacion":
           console.log(`Cambiando[algoritmo] ${Mensaje}`);
           CambiarAlgoritmo(Mensaje);
           break;
-        case "mode":
+          case "mode":
           console.log(`Cambiando[modo] ${Mensaje}`);
           AnimacionActual.CambiarModo(Mensaje);
           break;
-        case "color":
-          Operacion = ListaTopic.shift();
+          case "color":
+            Operacion = ListaTopic.shift();
           console.log(`Intentando color[${Operacion}] ${Mensaje}`);
           FuncionesColor(Operacion, Mensaje);
           break;
-        default:
-          console.log(`Operacion no encontrada: ${Operacion}`);
+          default:
+            console.log(`Operacion no encontrada: ${Operacion}`);
       }
       break;
-    default:
-      console.log(`Base no reconocida: ${Base}`);
+      default:
+        console.log(`Base no reconocida: ${Base}`);
+      }
+  break;
   }
 }
