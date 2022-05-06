@@ -4,7 +4,7 @@ let clientMQTT;
 let ListaColores;
 let ListaAlgoritmos;
 let AnimacionActual;
-let AlgoritmoActual = 0;
+let AlgoritmoActual;
 
 // let BrokerMQTT = "wss://public:public@public.cloud.shiftr.io";
 let ArchivoMQTT = "token/mqtt.json";
@@ -22,7 +22,12 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  CambiarAlgoritmo(ListaAlgoritmos[AlgoritmoActual]);
+  AlgoritmoActual = getItem('algoritmo');
+  print("Algoritmo Actual: "+AlgoritmoActual)
+  if(AlgoritmoActual == null){
+    AlgoritmoActual = ListaAlgoritmos[0];
+  }
+  CambiarAlgoritmo(AlgoritmoActual);
   ConectarMQTT();
 }
 
@@ -71,17 +76,21 @@ function CambiarAlgoritmo(Operacion) {
       break;
     case "random":
       let NumeroRandom = 0;
+      let nuevoAlgoritmo;
       let CantidadAlgoritmos = Object.values(ListaAlgoritmos).length;
       do {
         NumeroRandom = floor(random(CantidadAlgoritmos));
-      } while (AlgoritmoActual == NumeroRandom);
-
-      console.log(`Cambiando[${ListaAlgoritmos[NumeroRandom]}]`);
-      CambiarAlgoritmo(ListaAlgoritmos[NumeroRandom]);
+        nuevoAlgoritmo = ListaAlgoritmos[NumeroRandom]
+      } while (AlgoritmoActual == nuevoAlgoritmo);
+      AlgoritmoActual = nuevoAlgoritmo;
+      console.log(`Cambiando Random[${AlgoritmoActual}]`);
+      CambiarAlgoritmo(AlgoritmoActual);
       break;
     default:
       console.log(`Algoritmo no Encontrada ${Operacion}`);
+      return;
   }
+  storeItem('algoritmo', AlgoritmoActual);
 }
 
 function ObtenerColor(TextoColor) {
