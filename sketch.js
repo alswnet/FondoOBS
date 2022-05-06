@@ -28,6 +28,18 @@ function setup() {
     AlgoritmoActual = ListaAlgoritmos[0];
   }
   CambiarAlgoritmo(AlgoritmoActual);
+  let colorBase =  getItem('colorBase');
+  let colorLinea =  getItem('colorLinea');
+  let colorFondo =  getItem('colorFondo');
+  if(colorBase !== null){
+    FuncionesColor("base", colorBase)
+  }
+  if(colorLinea !== null){
+    FuncionesColor("linea", colorLinea)
+  }
+  if(colorLinea !== null){
+    FuncionesColor("fondo", colorFondo)
+  }
   ConectarMQTT();
 }
 
@@ -41,13 +53,16 @@ function FuncionesColor(Operacion, Mensaje) {
   ColorNuevo = ObtenerColor(Mensaje);
   switch (Operacion) {
     case "base":
-      AnimacionActual.CambiarColorBase(ColorNuevo);
+        AnimacionActual.CambiarColorBase(ColorNuevo);
+        storeItem('colorBase', Mensaje);
       break;
     case "linea":
       AnimacionActual.CambiarColorLinea(ColorNuevo);
+      storeItem('colorLinea', Mensaje);
       break;
     case "fondo":
       AnimacionActual.CambiarColorSecundario(ColorNuevo);
+      storeItem('colorFondo', Mensaje);
       break;
     default:
       console.log(`Error No[${Operacion}]`);
@@ -85,11 +100,14 @@ function CambiarAlgoritmo(Operacion) {
       AlgoritmoActual = nuevoAlgoritmo;
       console.log(`Cambiando Random[${AlgoritmoActual}]`);
       CambiarAlgoritmo(AlgoritmoActual);
+      return;
       break;
     default:
       console.log(`Algoritmo no Encontrada ${Operacion}`);
       return;
   }
+  AlgoritmoActual = Operacion;
+  print("Cambiando a " + AlgoritmoActual)
   storeItem('algoritmo', AlgoritmoActual);
 }
 
