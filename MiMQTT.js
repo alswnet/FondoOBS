@@ -29,7 +29,7 @@ function RecivirMensaje(topic, message) {
   console.log(`Topic[${topic}]: "${Mensaje}"`);
   let ListaTopic = topic.split("/");
   Base = ListaTopic.shift();
-  switch(Base){
+  switch (Base) {
     case "alsw":
       Base = ListaTopic.shift();
       switch (Base) {
@@ -40,26 +40,37 @@ function RecivirMensaje(topic, message) {
               console.log("Reiniciando[algoritmo]");
               AnimacionActual.Iniciar();
               break;
-        case "animacion":
-          console.log(`Cambiando[algoritmo] ${Mensaje}`);
-          CambiarAlgoritmo(Mensaje);
+            case "animacion":
+              console.log(`Cambiando[algoritmo] ${Mensaje}`);
+              CambiarAlgoritmo(Mensaje);
+              break;
+            case "mode":
+              console.log(`Cambiando[modo] ${Mensaje}`);
+              AnimacionActual.CambiarModo(Mensaje);
+              break;
+            case "color":
+              Operacion = ListaTopic.shift();
+              console.log(`Intentando color[${Operacion}] ${Mensaje}`);
+              FuncionesColor(Operacion, Mensaje);
+              break;
+            case "fps":
+              Operacion = ListaTopic.shift();
+              switch (Operacion) {
+                case "cambio":
+                  AnimacionActual.CambiarFPS(Mensaje);
+                  break;
+                case "asignar":
+                  AnimacionActual.AsignarFPS(Mensaje);
+                  break;
+              }
+              break;
+            default:
+              console.log(`Operacion no encontrada: ${Operacion}`);
+          }
           break;
-          case "mode":
-          console.log(`Cambiando[modo] ${Mensaje}`);
-          AnimacionActual.CambiarModo(Mensaje);
-          break;
-          case "color":
-            Operacion = ListaTopic.shift();
-          console.log(`Intentando color[${Operacion}] ${Mensaje}`);
-          FuncionesColor(Operacion, Mensaje);
-          break;
-          default:
-            console.log(`Operacion no encontrada: ${Operacion}`);
+        default:
+          console.log(`Base no reconocida: ${Base}`);
       }
       break;
-      default:
-        console.log(`Base no reconocida: ${Base}`);
-      }
-  break;
   }
 }
