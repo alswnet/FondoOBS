@@ -25,6 +25,7 @@ class StartField extends Animacion {
   }
 
   Dibujar() {
+    super.Dibujar();
     translate(width / 2, height / 2);
     background(this.ColorSecundario);
     for (var i = 0; i < this.stars.length; i++) {

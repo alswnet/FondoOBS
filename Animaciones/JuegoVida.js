@@ -118,6 +118,7 @@ class JuegoVida extends Animacion {
   }
 
   Dibujar() {
+    super.Dibujar();
     stroke(this.ColorLinea);
     // translate(-width / 2, -height / 2);
     for (let x = 0; x < this.Columnas; x++) {

@@ -41,6 +41,7 @@ class WavyField extends Animacion {
   Actualizar() {}
 
   Dibujar() {
+    super.Dibujar();
     background(this.ColorSecundario);
     strokeWeight(this.GrosorLinea);
     stroke(this.ColorBase);

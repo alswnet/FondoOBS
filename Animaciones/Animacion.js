@@ -4,13 +4,22 @@ class Animacion {
     this.ColorBase;
     this.ColorSecundario;
     this.ColorLinea;
+    this.TiempoFPS = 0;
+    this.EsperaFPS = 1;
+    this.FPS = 60;
   }
 
   Iniciar() {}
 
   Actualizar() {}
 
-  Dibujar() {}
+  Dibujar() {
+    if (millis() - this.TiempoFPS > this.EsperaFPS * 1000) {
+      this.TiempoFPS = millis();
+      clientMQTT.publish("alsw/fondoOBS/fps", frameRate().toFixed(0));
+      print(`FPS: ${frameRate().toFixed(2)}`);
+    }
+  }
 
   CambiarColorBase(NuevoColor) {
     this.ColorBase = color(NuevoColor);
@@ -25,6 +34,22 @@ class Animacion {
   }
 
   CambiarModo(Modo) {
-    console.log("Intentando Cambiar a Modo: " + Modo);
+    print("Intentando Cambiar a Modo: " + Modo);
+  }
+
+  CambiarFPS(Cantidad) {
+    Cantidad = parseInt(Cantidad);
+    this.FPS += Cantidad;
+    if (this.FPS <= 0) {
+      this.FPS = 1;
+    }
+    print(`Cambiando ${Cantidad} FPS[${this.FPS}]`);
+    frameRate(this.FPS);
+  }
+
+  AsignarFPS(Valor) {
+    this.FPS = parseInt(Valor);
+    print(`Asignar FPS[${this.FPS}]`);
+    frameRate(this.FPS);
   }
 }

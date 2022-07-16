@@ -25,6 +25,7 @@ class PerlinNoise extends Animacion {
   }
 
   Dibujar() {
+    super.Dibujar();
     background(this.ColorSecundario);
     let a = this.percent * TWO_PI;
     this.particles.forEach((element) => element.render(a));

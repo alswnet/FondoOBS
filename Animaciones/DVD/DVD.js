@@ -27,6 +27,10 @@ class DVD extends Animacion {
     }
   }
 
+  Dibujar(){
+    super.Dibujar();
+  }
+
   CambiarColorBase(NuevoColor) {
     this.ColorBase = color(NuevoColor);
     for (let i = 0; i < this.cajas.length; i++) {
