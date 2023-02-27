@@ -31,6 +31,7 @@ function setup() {
   let colorBase = getItem("colorBase");
   let colorLinea = getItem("colorLinea");
   let colorFondo = getItem("colorFondo");
+  let FrameBase = getItem("frame");
   if (colorBase !== null) {
     FuncionesColor("base", colorBase);
   }
@@ -39,6 +40,9 @@ function setup() {
   }
   if (colorLinea !== null) {
     FuncionesColor("linea", colorLinea);
+  }
+  if (FrameBase !== null){
+    AnimacionActual.AsignarFPS(FrameBase);
   }
   ConectarMQTT();
 }

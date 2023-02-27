@@ -17,7 +17,7 @@ class Animacion {
     if (millis() - this.TiempoFPS > this.EsperaFPS * 1000) {
       this.TiempoFPS = millis();
       clientMQTT.publish("alsw/fondoOBS/fps", frameRate().toFixed(0));
-      print(`FPS: ${frameRate().toFixed(2)}`);
+      // print(`FPS: ${frameRate().toFixed(2)}`);
     }
   }
 
@@ -46,10 +46,11 @@ class Animacion {
     print(`Cambiando ${Cantidad} FPS[${this.FPS}]`);
     frameRate(this.FPS);
   }
-
+  
   AsignarFPS(Valor) {
     this.FPS = parseInt(Valor);
     print(`Asignar FPS[${this.FPS}]`);
+    storeItem("frame", this.FPS);
     frameRate(this.FPS);
   }
 }
