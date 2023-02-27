@@ -2,10 +2,10 @@ class Flocking extends Animacion {
   constructor() {
     super();
     this.flock = [];
-    this.Iniciar();
     this.ColorBase = ObtenerColor(null);
     this.ColorSecundario = color(0);
     this.ColorLinea = color(0, 30, 30);
+    this.Iniciar();
   }
 
   Iniciar() {
