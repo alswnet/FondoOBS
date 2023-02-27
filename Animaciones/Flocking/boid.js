@@ -11,21 +11,21 @@ class Boid {
   }
 
   bordes() {
-    if (this.posicion.x > width) {
-      this.posicion.x = 0;
-    } else if (this.posicion.x < 0) {
-      this.posicion.x = width;
+    if (this.posicion.x > width + 10) {
+      this.posicion.x = -10;
+    } else if (this.posicion.x < -10) {
+      this.posicion.x = width + 10;
     }
 
-    if (this.posicion.y > height) {
-      this.posicion.y = 0;
-    } else if (this.posicion.y < 0) {
-      this.posicion.x = height;
+    if (this.posicion.y > height + 10) {
+      this.posicion.y = -10;
+    } else if (this.posicion.y < -10) {
+      this.posicion.y = height + 10;
     }
   }
 
   alinear(boids) {
-    let radio = 100;
+    let radio = 49;
     let deseo = createVector();
     let total = 0;
     for (let otro of boids) {
@@ -50,7 +50,7 @@ class Boid {
   }
 
   conjuntar(boids) {
-    let radio = 100;
+    let radio = 50;
     let deseo = createVector();
     let total = 0;
     for (let otro of boids) {
@@ -87,8 +87,8 @@ class Boid {
         otro.posicion.y
       );
       if (otro != this && d < radio) {
-        let diferencia = p5.Vector.sub(this.posicion, otro.posicion)
-        diferencia.div(d)
+        let diferencia = p5.Vector.sub(this.posicion, otro.posicion);
+        diferencia.div(d);
         deseo.add(diferencia);
         total++;
       }

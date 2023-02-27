@@ -1,7 +1,7 @@
 class Flocking extends Animacion {
   constructor() {
     super();
-    this.flock;
+    this.flock = [];
     this.Iniciar();
     this.ColorBase = ObtenerColor(null);
     this.ColorSecundario = color(0);
@@ -17,8 +17,8 @@ class Flocking extends Animacion {
 
   Actualizar() {
     for (let boid of this.flock) {
-      boid.flock(this.flock);
       boid.bordes(); 
+      boid.flock(this.flock);
       boid.actualizar();
     }
   }
