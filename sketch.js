@@ -23,6 +23,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   AlgoritmoActual = getItem("algoritmo");
+  // AlgoritmoActual = "flocking";
   print("Algoritmo Actual: " + AlgoritmoActual);
   if (AlgoritmoActual == null) {
     AlgoritmoActual = ListaAlgoritmos[0];
@@ -92,6 +93,9 @@ function CambiarAlgoritmo(Operacion) {
       break;
     case "dvd":
       AnimacionActual = new DVD();
+      break;
+    case "flocking":
+      AnimacionActual = new Flocking();
       break;
     case "random":
       let NumeroRandom = 0;
