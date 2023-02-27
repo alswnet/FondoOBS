@@ -13,6 +13,9 @@ class Flocking extends Animacion {
     for (let i = 0; i < 100; i++) {
       this.flock.push(new Boid());
     }
+    for (let boid of this.flock) {
+      boid.cambiarColor(this.ColorBase);
+    }
   }
 
   Actualizar() {
