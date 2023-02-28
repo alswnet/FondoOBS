@@ -3,7 +3,9 @@ class Flocking extends Animacion {
     super();
     this.flock = [];
     this.ColorBase = ObtenerColor(null);
+    this.ColorBase.setAlpha(50);
     this.ColorSecundario = color(0);
+    this.ColorSecundario.setAlpha(50);
     this.ColorLinea = color(0, 30, 30);
     this.Iniciar();
   }
@@ -35,8 +37,9 @@ class Flocking extends Animacion {
 
   CambiarColorBase(NuevoColor) {
     super.CambiarColorBase(NuevoColor);
+    // this.ColorBase.setAlpha(50);
     for (let boid of this.flock) {
-      boid.cambiarColor(NuevoColor);
+      boid.cambiarColor(this.ColorBase);
     }
   } 
   CambiarColorLinea(NuevoColor) {
@@ -45,5 +48,6 @@ class Flocking extends Animacion {
 
   CambiarColorSecundario(NuevoColor) {
     super.CambiarColorSecundario(NuevoColor);
+    this.ColorSecundario.setAlpha(70)
   }
 }
