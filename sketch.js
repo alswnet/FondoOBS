@@ -6,21 +6,34 @@ let ListaAlgoritmos;
 let AnimacionActual;
 let AlgoritmoActual;
 
-// let BrokerMQTT = "wss://public:public@public.cloud.shiftr.io";
 let ArchivoMQTT = "token/mqtt.json";
 let DataMQTT;
 let ExprecionColores = /^#[0-9a-f]{3,6}$/i;
+
+function ErrorCarga(Data) {
+  console.log("Error cargando mqtt.json, usando default");
+  DataMQTT = {
+    broker: "test.mosquitto.org",
+    puerto: 8081,
+    protocolo: "wss",
+  };
+  ConectarMQTT();
+}
+
+function dataBien() {
+  console.log("Usando MQTT, desde archivo mqtt.json");
+  ConectarMQTT();
+}
 
 function preload() {
   ListaColores = loadJSON("Colores.json");
   ListaAlgoritmos = loadJSON("Algoritmos.json");
   console.log(ListaColores);
   console.log(ListaAlgoritmos);
-  DataMQTT = loadJSON(ArchivoMQTT);
-  // Usar callbask para dos servidores
 }
 
 function setup() {
+  loadJSON(ArchivoMQTT, dataBien, ErrorCarga);
   createCanvas(windowWidth, windowHeight);
   AlgoritmoActual = getItem("algoritmo");
   // AlgoritmoActual = "flocking";
@@ -42,10 +55,9 @@ function setup() {
   if (colorLinea !== null) {
     FuncionesColor("linea", colorLinea);
   }
-  if (FrameBase !== null){
+  if (FrameBase !== null) {
     AnimacionActual.AsignarFPS(FrameBase);
   }
-  ConectarMQTT();
 }
 
 function draw() {
@@ -117,7 +129,6 @@ function CambiarAlgoritmo(Operacion) {
   AlgoritmoActual = Operacion;
   print("Cambiando a " + AlgoritmoActual);
   storeItem("algoritmo", AlgoritmoActual);
-  
 }
 
 function ObtenerColor(TextoColor) {
