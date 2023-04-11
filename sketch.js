@@ -20,8 +20,9 @@ function ErrorCarga(Data) {
   ConectarMQTT();
 }
 
-function dataBien() {
+function dataBien(data) {
   console.log("Usando MQTT, desde archivo mqtt.json");
+  DataMQTT = data;
   ConectarMQTT();
 }
 
