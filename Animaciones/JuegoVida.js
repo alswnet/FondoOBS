@@ -17,10 +17,11 @@ class JuegoVida extends Animacion {
 
   Iniciar() {
     background(this.ColorSecundario);
+    let Mayor = width > height ? width : height;
     this.Modo = "ruido";
     this.Ancho = floor(random(this.DimencionMinima, this.DimencionMaxima));
-    this.Columnas = floor(width / this.Ancho);
-    this.Filas = floor(width / this.Ancho);
+    this.Columnas = floor(Mayor / this.Ancho);
+    this.Filas = floor(Mayor / this.Ancho);
     this.Mundo = [];
     this.MundoColor = [];
     this.MundoColorPasado = [];
@@ -159,11 +160,7 @@ class JuegoVida extends Animacion {
 
   CrearColores() {
     for (let x = 0; x <= this.NivelColor; x++) {
-      this.ArregloColor[x] = lerpColor(
-        this.ColorSecundario,
-        this.ColorBase,
-        x / this.NivelColor
-      );
+      this.ArregloColor[x] = lerpColor(this.ColorSecundario, this.ColorBase, x / this.NivelColor);
     }
     this.ColorLinea = lerpColor(this.ColorBase, this.ColorSecundario, 2 / 3);
   }
