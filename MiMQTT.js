@@ -2,8 +2,14 @@ let TopicBase = ["alsw/fondoOBS/#"];
 
 function ConectarMQTT() {
   console.log(`Intentando conectar a MQTT ${DataMQTT.broker}`);
+  let BrokerMQTT = "";
+  if(DataMQTT.user  === undefined){
+    console.log("No Evite usuario y contraseña");
+    BrokerMQTT = `${DataMQTT.protocolo}://${DataMQTT.broker}:${DataMQTT.puerto}`;
+  } else{
+    BrokerMQTT = `${DataMQTT.protocolo}://${DataMQTT.user}:${DataMQTT.pass}@${DataMQTT.broker}:${DataMQTT.puerto}`;
+  }
 
-  let BrokerMQTT = `${DataMQTT.protocolo}://${DataMQTT.user}:${DataMQTT.pass}@${DataMQTT.broker}:${DataMQTT.puerto}`;
   clientMQTT = mqtt.connect(BrokerMQTT, {
     clientId: "Fondo_OBS_" + floor(random(10000)),
   });
