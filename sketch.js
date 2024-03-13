@@ -47,6 +47,7 @@ function setup() {
   let colorLinea = getItem("colorLinea");
   let colorFondo = getItem("colorFondo");
   let FrameBase = getItem("frame");
+  let Arcoiris = getItem("arcoiris");
   if (colorBase !== null) {
     FuncionesColor("base", colorBase);
   }
@@ -58,6 +59,11 @@ function setup() {
   }
   if (FrameBase !== null) {
     AnimacionActual.AsignarFPS(FrameBase);
+  }
+  if(Arcoiris !== null){
+    AnimacionActual.CambiarArcoiris(Arcoiris);
+  } else {
+    AnimacionActual.CambiarArcoiris(false);
   }
 }
 

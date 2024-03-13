@@ -72,14 +72,15 @@ class Animacion {
 
   CambiarArcoiris(Estado) {
 
-    if (Estado == "true") {
+    if (Estado == "true" || Estado == true) {
       this.Arcoiris = true;
-    } else if (Estado == "false") {
+    } else if (Estado == "false" || Estado == false) {
       this.Arcoiris = false;
     } else if (Estado == "cambiar" || Estado == "c") {
       this.Arcoiris = !this.Arcoiris;
     }
     print("Modo Arcoíris: " + this.Arcoiris);
+    storeItem("arcoiris", this.Arcoiris);
   }
 
   CambiarFPS(Cantidad) {
