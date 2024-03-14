@@ -6,7 +6,7 @@ class Animacion {
     this.ColorLinea;
     this.Arcoiris = false;
     this.ArcoirisEsperaMinima = 5;
-    this.ArcoirisEsperaMaxima = 300;
+    this.ArcoirisEsperaMaxima = 180;
     this.ArcoirisTiempo = 0;
     this.ArcoirisEspera = 10;
     this.TiempoFPS = 0;
