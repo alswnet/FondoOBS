@@ -64,8 +64,11 @@ function RecivirMensaje(topic, message) {
               return;
               break;
             case "arcoiris":
-              console.log(`Modo Arcoiris: ${Mensaje}`);
-              AnimacionActual.CambiarArcoiris(Mensaje);
+              Operacion = ListaTopic.shift();
+              if (Operacion === undefined) {
+                console.log(`Modo Arcoiris: ${Mensaje}`);
+                AnimacionActual.CambiarArcoiris(Mensaje);
+              }
               return;
               break;
             case "fps":

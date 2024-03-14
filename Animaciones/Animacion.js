@@ -27,7 +27,6 @@ class Animacion {
         clientMQTT.publish("alsw/fondoOBS/fps", frameRate().toFixed(0));
       }
       this.TiempoFPS = millis();
-      // print(`FPS: ${frameRate().toFixed(2)}`);
     }
     if (this.Arcoiris) {
       if (millis() - this.ArcoirisTiempo > this.ArcoirisEspera * 1000) {
@@ -50,6 +49,9 @@ class Animacion {
         this.ArcoirisTiempo = millis();
         this.ArcoirisEspera = floor(random(this.ArcoirisEsperaMinima, this.ArcoirisEsperaMaxima));
         print("Color Arcoiris: " + CualCambiar + " - " + ColorRandom + " - " + this.ArcoirisEspera + "s");
+        if (clientMQTT != undefined) {
+          clientMQTT.publish("alsw/fondoOBS/arcoiris/espera", "" + this.ArcoirisEspera);
+        }
       }
     }
   }
@@ -79,8 +81,12 @@ class Animacion {
     } else if (Estado == "cambiar" || Estado == "c") {
       this.Arcoiris = !this.Arcoiris;
     }
-    print("Modo Arcoíris: " + this.Arcoiris);
+    print("Arcoíris: " + this.Arcoiris);
     storeItem("arcoiris", this.Arcoiris);
+    this.ArcoirisEspera = floor(random(this.ArcoirisEsperaMinima, this.ArcoirisEsperaMaxima));
+    if (clientMQTT != undefined) {
+      clientMQTT.publish("alsw/fondoOBS/arcoiris/espera", "" + this.ArcoirisEspera);
+    }
   }
 
   CambiarFPS(Cantidad) {
